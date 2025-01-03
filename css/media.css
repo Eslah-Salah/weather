@@ -1,0 +1,29 @@
+/* sm */
+@media screen and (min-width:640px) {
+    .site-footer .social-links{
+        width: 100%;
+    }
+
+}
+
+/* md */
+@media screen and (min-width:768px) {
+   
+   
+}
+
+/* lg */
+@media screen and (min-width:1024px) {
+  
+}
+
+/* xl */
+@media screen and (min-width:1280px) {
+    .forecast-container .forecast {
+        width: 33.33%;
+    }
+    
+}
+
+/* 2xl */
+@media screen and (min-width:1536px) {}
