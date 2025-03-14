@@ -37,35 +37,26 @@
 
   <body>
     <div class="site-content">
-		<div class="site-header">
-			<div class="container">
-				<a class='branding' href='/'>
-					<img src="imges/logo.png" alt="mmmm" class="logo">
-					<div class="logo-type">
-						<h1 class="site-title">Weather</h1>
-						<small class="site-description">tagline goes here</small>
-					</div>
-				</a>
-			
-
-				<!-- Default snippet for navigation -->
-				<div class="main-navigation">
-					
-					<ul class="menu" >
-						<li class="menu-item current-menu-item"><a href='/'>Home</a></li>
-						<li class="menu-item"><a href="#">News</a></li>
-						<li class="menu-item"><a href="#">Live cameras</a></li>
-						<li class="menu-item"><a href="#">Photos</a></li>
-						<li class="menu-item"><a href='/contact'>Contact</a></li>
-					</ul> <!-- .menu -->
-				</div> <!-- .main-navigation -->
-				
-				<div class="clear"></div>
-
-				<div class="mobile-navigation "></div>
-
-			</div>
-		</div>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img src="imges/logo.png" alt="Logo" class="logo" height="40">
+            Weather
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">News</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Live Cameras</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Photos</a></li>
+              <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
       <!-- .site-header -->
 
       <div style="background-image: url(imges/banner.png)" class="hero">

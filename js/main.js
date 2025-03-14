@@ -1,41 +1,49 @@
-// Fetch and display weather data
+// Fetch and display weather data with debouncing
+let debounceTimeout;
+
 async function fetchWeather(query) {
-    try {
-        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=51e07ac6390a47dd860201755242912&q=${query}&days=3`);
-        if (response.ok) {
-            const data = await response.json();
-            displayToday(data.location, data.current);
-            displayForecast(data.forecast.forecastday);
-        } else {
-            console.error("Failed to fetch weather data");
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(async () => {
+        try {
+            const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=51e07ac6390a47dd860201755242912&q=${query}&days=3`);
+            if (response.ok) {
+                const data = await response.json();
+                displayToday(data.location, data.current);
+                displayForecast(data.forecast.forecastday);
+            } else {
+                showError("City not found. Please try again.");
+            }
+        } catch (error) {
+            showError("Error fetching weather data. Check your connection.");
+            console.error("Error fetching weather data:", error);
         }
-    } catch (error) {
-        console.error("Error fetching weather data:", error);
-    }
+    }, 500);
 }
 
 // Display today's weather
 function displayToday(location, current) {
     if (!current) return;
+    
     const date = new Date(current.last_updated);
     const todayHTML = `
         <div class="today forecast">
             <div class="forecast-header">
-                <div class="day ">${days[date.getDay()]}</div>
-                <div class="date ">${date.getDate()} ${monthNames[date.getMonth()]}</div>
+                <div class="day">${days[date.getDay()]}</div>
+                <div class="date">${date.getDate()} ${monthNames[date.getMonth()]}</div>
             </div>
             <div class="forecast-content">
-                <div class="location">${location.name}</div>
+                <div class="location">${location.name}, ${location.country}</div>
                 <div class="degree">
                     <div class="num">${current.temp_c}<sup>o</sup>C</div>
                     <img src="https:${current.condition.icon}" alt="Weather Icon" width="90">
                 </div>
                 <div class="custom">${current.condition.text}</div>
-                <span><img src="imges/icon-umberella.png" alt="">20%</span>
-                <span><img src="imges/icon-wind.png" alt="">18km/h</span>
-                <span><img src="imges/icon-compass.png" alt="">East</span>
+                <span><img src="images/icon-umberella.png" alt=""> ${current.humidity}%</span>
+                <span><img src="images/icon-wind.png" alt=""> ${current.wind_kph} km/h</span>
+                <span><img src="images/icon-compass.png" alt=""> ${current.wind_dir}</span>
             </div>
         </div>`;
+    
     document.getElementById("forecast").innerHTML = todayHTML;
 }
 
@@ -49,7 +57,7 @@ function displayForecast(forecastDays) {
                 <div class="forecast-header">
                     <div class="day">${days[date.getDay()]}</div>
                 </div>
-                <div class="forecast-content text-center ">
+                <div class="forecast-content text-center">
                     <img src="https:${forecastDays[i].day.condition.icon}" alt="Weather Icon" width="48">
                     <div class="degree">${forecastDays[i].day.maxtemp_c}<sup>o</sup>C</div>
                     <small>${forecastDays[i].day.mintemp_c}<sup>o</sup></small>
@@ -57,9 +65,14 @@ function displayForecast(forecastDays) {
                 </div>
             </div>`;
     }
+    
     document.getElementById("forecast").innerHTML += forecastHTML;
 }
 
+// Show error message
+function showError(message) {
+    document.getElementById("forecast").innerHTML = `<div class="error-message">${message}</div>`;
+}
 
 // Add event listener for search input
 document.getElementById("search").addEventListener("keyup", event => {
@@ -71,5 +84,7 @@ const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 // Fetch default weather for Cairo
-fetchWeather("cairo");
+fetchWeather("Cairo");
+
+
 
